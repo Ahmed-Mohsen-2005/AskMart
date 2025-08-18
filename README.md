@@ -79,11 +79,6 @@ AskMart integrates an AI-powered chatbot to assist users with:
 
 ---
 
-## 📸 Screenshots  
-(Add screenshots of UI, chatbot, and admin dashboard here.)  
-
----
-
 ## 👥 Contributors  
 This project was developed during the **iScore Internship Program** by:  
 - Ahmed Mohsen
