@@ -146,5 +146,79 @@ namespace Infrastructure.Implementations
             };
         }
 
+        // forget password 
+        public async Task<Response<string>> ForgotPasswordAsync(string email)
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return new Response<string>
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Succeeded = false,
+                    Message = "User with this email does not exist"
+                };
+            }
+
+            // Generate reset token
+            var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+
+            // Save token + expiration
+            user.ResetPasswordToken = token;
+            user.ResetTokenExpires = DateTime.UtcNow.AddHours(1);
+
+            await _db.SaveChangesAsync();
+
+            return new Response<string>
+            {
+                StatusCode = HttpStatusCode.OK,
+                Succeeded = true,
+                Message = "Password reset token generated",
+                Data = token // for now, should be emailed instead
+            };
+        }
+
+        // reset password 
+        public async Task<Response<string>> ResetPasswordAsync(string email, string token, string newPassword)
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return new Response<string>
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Succeeded = false,
+                    Message = "User with this email does not exist"
+                };
+            }
+
+            if (user.ResetPasswordToken != token || user.ResetTokenExpires < DateTime.UtcNow)
+            {
+                return new Response<string>
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Succeeded = false,
+                    Message = "Invalid or expired reset token"
+                };
+            }
+
+            // Hash new password
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            user.ResetPasswordToken = null;
+            user.ResetTokenExpires = null;
+
+            await _db.SaveChangesAsync();
+
+            return new Response<string>
+            {
+                StatusCode = HttpStatusCode.OK,
+                Succeeded = true,
+                Message = "Password has been reset successfully",
+                Data = null
+            };
+        }
+
     }
 }

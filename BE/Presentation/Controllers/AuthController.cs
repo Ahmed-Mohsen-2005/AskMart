@@ -1,7 +1,7 @@
 using Application.Contracts;
-using Domain.Results;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Base;
+
 
 namespace Presentation.Controllers
 {
@@ -37,22 +37,29 @@ namespace Presentation.Controllers
                 request.Username,
                 request.Password);
 
-            return NewResult(response); 
+            return NewResult(response);
+        }
+
+        // POST: api/auth/forgot-password
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+        {
+            var response = await _authService.ForgotPasswordAsync(request.Email);
+            return NewResult(response);
+        }
+
+        // POST: api/auth/reset-password
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+        {
+            var response = await _authService.ResetPasswordAsync(
+                request.Email,
+                request.Token,
+                request.NewPassword);
+
+            return NewResult(response);
         }
     }
 
-    // DTOs
-    public class RegisterRequest
-    {
-        public string Username { get; set; } = null!;
-        public string Email { get; set; } = null!;
-        public string Address { get; set; } = null!;
-        public string Password { get; set; } = null!;
-    }
 
-    public class LoginRequest
-    {
-        public string Username { get; set; } = null!;
-        public string Password { get; set; } = null!;
-    }
 }
