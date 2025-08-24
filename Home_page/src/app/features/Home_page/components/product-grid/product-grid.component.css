@@ -1,0 +1,55 @@
+.container {
+  max-width: 1200px;
+}
+
+h2 {
+  font-weight: 600;
+  color: #2e7d32; /* supermarket green */
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+  height: 220px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.text-muted {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666 !important;
+}
+
+.btn-success {
+  border-radius: 30px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  background-color: #2e7d32;
+  border: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-success:hover {
+  background-color: #256628;
+  transform: scale(1.05);
+}
