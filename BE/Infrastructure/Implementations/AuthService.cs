@@ -1,5 +1,5 @@
 using Application.Contracts;
-using Domain.Entities;
+using Domain.Entities.User;
 using Domain.Results;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;

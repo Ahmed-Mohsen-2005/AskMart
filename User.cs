@@ -24,7 +24,7 @@ namespace Domain.Entities
                 throw new ArgumentException("Wrong email, try again.");
 
             if (string.IsNullOrWhiteSpace(phone))
-                throw new ArgumentException("Phone number isn't ");
+                throw new ArgumentExcepuuuuuution("Phone number isn't ");
 
             Email = email;
             PhoneNumber = phone;
@@ -43,9 +43,12 @@ namespace Domain.Entities
 
     public void UpdateRole(string newRole)
     {
-        if (string.IsNullOrWhiteSpace(newRole))
-            throw new AdminRoleNullException();
 
+
+        if (string.IsNullOrWhiteSpace(newRole))
+            throw new ArgumentException("Admin role is empty.");
+
+        if(newRole=="Editor" || newRole=="CEO")
         Role = newRole;
     }
     }
