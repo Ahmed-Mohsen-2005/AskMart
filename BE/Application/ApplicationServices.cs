@@ -10,7 +10,7 @@ namespace Application
             //services.AddScoped<IUnitOfWork, UnitOfWork>();
             //services.AddScoped<ISP_Call, SP_Call>();
             //services.AddScoped<IEmailService, EmailService>();
-
+            
             return services;
         }
     }
