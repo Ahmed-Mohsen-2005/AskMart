@@ -2,6 +2,7 @@ using Application.Contracts;
 using Domain.Entities;
 using Domain.Results;
 using Infrastructure.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -15,12 +16,14 @@ namespace Infrastructure.Implementations
     public class AuthService : IAuthService
     {
         // Dependencies
-        private readonly AppDbContext _db;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _config;
 
-        public AuthService(AppDbContext db, IConfiguration config)
+        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration config)
         {
-            _db = db;
+            _userManager = userManager;
+            _signInManager = signInManager;
             _config = config;
         }
 
@@ -29,7 +32,10 @@ namespace Infrastructure.Implementations
         public async Task<Response<AuthResult>> RegisterAsync(string username, string email, string address, string password)
         {
             // 1) Check if user already exists
-            if (await _db.Users.AnyAsync(u => u.Username == username || u.Email == email))
+            var existingUser = await _userManager.FindByNameAsync(username)
+                               ?? await _userManager.FindByEmailAsync(email);
+
+            if (existingUser != null)
             {
                 return new Response<AuthResult>
                 {
@@ -39,25 +45,31 @@ namespace Infrastructure.Implementations
                 };
             }
 
-            // 2) Hash the password
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
-            // 3) Create the user entity
-            var user = new User
+            // 2) Create the user entity
+            var user = new ApplicationUser
             {
-                Id = Guid.NewGuid(),
-                Username = username,
+                UserName = username,
                 Email = email,
-                Address = address,
-                PasswordHash = hashedPassword
+                Address = address
             };
 
-            // 4) Save to DB
-            _db.Users.Add(user);
-            await _db.SaveChangesAsync();
+            // 3) Save to DB
+            var result = await _userManager.CreateAsync(user, password);
 
-            // 5) Generate JWT + AuthResult
-            var authResult = GenerateAuthResult(user);
+            if (!result.Succeeded)
+            {
+                return new Response<AuthResult>
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Succeeded = false,
+                    Message = "Registration failed",
+                    Errors = result.Errors.Select(e => e.Description).ToList()
+                };
+            }
+
+            // 4) Generate JWT + AuthResult
+            var authResult = await GenerateAuthResult(user);
 
             // 6) Return wrapped response
             return new Response<AuthResult>
@@ -69,18 +81,22 @@ namespace Infrastructure.Implementations
             };
         }
 
-        // Helper method: Generate JWT
-        private AuthResult GenerateAuthResult(User user)
+        //helper method to generate JWT token and AuthResult
+        private async Task<AuthResult> GenerateAuthResult(ApplicationUser user)
         {
             var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]!);
             var creds = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 
+            var roles = await _userManager.GetRolesAsync(user);
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Name, user.UserName!),
+                new Claim(ClaimTypes.Email, user.Email ?? "")
             };
+
+            claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
 
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],
@@ -92,11 +108,11 @@ namespace Infrastructure.Implementations
 
             return new AuthResult
             {
-                UserId = user.Id.GetHashCode(), // could map properly if needed
+                UserId = user.Id.GetHashCode(),
                 IsAuthenticated = true,
-                Username = user.Username,
+                Username = user.UserName,
                 Email = user.Email,
-                Roles = new List<string>(), // no roles yet
+                Roles = roles.ToList(),
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 ExpiresOn = token.ValidTo,
                 RefreshToken = Guid.NewGuid().ToString(),
@@ -109,7 +125,7 @@ namespace Infrastructure.Implementations
         public async Task<Response<AuthResult>> LoginAsync(string username, string password)
         {
             // 1) Look up user
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
+            var user = await _userManager.FindByNameAsync(username);
 
             if (user == null)
             {
@@ -122,8 +138,9 @@ namespace Infrastructure.Implementations
             }
 
             // 2) Verify password
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
-            if (!isPasswordValid)
+            var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
+
+            if (!result.Succeeded)
             {
                 return new Response<AuthResult>
                 {
@@ -134,7 +151,7 @@ namespace Infrastructure.Implementations
             }
 
             // 3) Generate JWT + AuthResult
-            var authResult = GenerateAuthResult(user);
+            var authResult = await GenerateAuthResult(user);
 
             // 4) Return wrapped response
             return new Response<AuthResult>
@@ -149,7 +166,7 @@ namespace Infrastructure.Implementations
         // forget password 
         public async Task<Response<string>> ForgotPasswordAsync(string email)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
@@ -162,27 +179,21 @@ namespace Infrastructure.Implementations
             }
 
             // Generate reset token
-            var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-
-            // Save token + expiration
-            user.ResetPasswordToken = token;
-            user.ResetTokenExpires = DateTime.UtcNow.AddHours(1);
-
-            await _db.SaveChangesAsync();
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             return new Response<string>
             {
                 StatusCode = HttpStatusCode.OK,
                 Succeeded = true,
                 Message = "Password reset token generated",
-                Data = token // for now, should be emailed instead
+                Data = token
             };
         }
 
         // reset password 
         public async Task<Response<string>> ResetPasswordAsync(string email, string token, string newPassword)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
@@ -194,31 +205,28 @@ namespace Infrastructure.Implementations
                 };
             }
 
-            if (user.ResetPasswordToken != token || user.ResetTokenExpires < DateTime.UtcNow)
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+            if (!result.Succeeded)
             {
                 return new Response<string>
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     Succeeded = false,
-                    Message = "Invalid or expired reset token"
+                    Message = "Password reset failed",
+                    Errors = result.Errors.Select(e => e.Description).ToList()
                 };
             }
-
-            // Hash new password
-            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
-            user.ResetPasswordToken = null;
-            user.ResetTokenExpires = null;
-
-            await _db.SaveChangesAsync();
 
             return new Response<string>
             {
                 StatusCode = HttpStatusCode.OK,
                 Succeeded = true,
-                Message = "Password has been reset successfully",
-                Data = null
+                Message = "Password reset successful"
             };
+
+           
         }
 
     }
+    
 }
