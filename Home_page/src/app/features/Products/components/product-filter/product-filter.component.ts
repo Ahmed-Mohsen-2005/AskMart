@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-product-filter',
   imports: [],
-  templateUrl: './product-filter.html',
-  styleUrl: './product-filter.css'
+  templateUrl: './product-filter.component.html',
+  styleUrl: './product-filter.component.css'
 })
 export class ProductFilter {
 
