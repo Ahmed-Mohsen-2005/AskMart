@@ -7,8 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Application.Contracts;
 using Infrastructure.Implementations;
-using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Domain.Entities.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
