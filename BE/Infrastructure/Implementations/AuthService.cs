@@ -1,13 +1,12 @@
 using Application.Contracts;
 using Domain.Entities.User;
 using Domain.Results;
-using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using Domain.Enum;
 using System.Security.Claims;
 using System.Text;
 
@@ -29,7 +28,7 @@ namespace Infrastructure.Implementations
 
         // implemented from IAuthService
         // Registration method
-        public async Task<Response<AuthResult>> RegisterAsync(string username, string email, string address, string password)
+        public async Task<Response<AuthResult>> CustomerRegisterAsync(string username, string email, string address, string password, UserType userType)
         {
             // 1) Check if user already exists
             var existingUser = await _userManager.FindByNameAsync(username)
@@ -51,7 +50,8 @@ namespace Infrastructure.Implementations
             {
                 UserName = username,
                 Email = email,
-                Address = address
+                Address = address,
+                Type = UserType.Customer
             };
 
             // 3) Save to DB
@@ -65,6 +65,86 @@ namespace Infrastructure.Implementations
                     Succeeded = false,
                     Message = "Registration failed",
                     Errors = result.Errors.Select(e => e.Description).ToList()
+                };
+            }
+            var addRoleResult = await _userManager.AddToRoleAsync(user, "Customer");
+            if (!addRoleResult.Succeeded)
+            {
+                // rollback:
+                await _userManager.DeleteAsync(user);
+
+                return new Response<AuthResult>
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Succeeded = false,
+                    Message = "Failed to assign role",
+                    Errors = addRoleResult.Errors.Select(e => e.Description).ToList()
+                };
+            }
+            // 4) Generate JWT + AuthResult
+            var authResult = await GenerateAuthResult(user);
+
+            // 6) Return wrapped response
+            return new Response<AuthResult>
+            {
+                StatusCode = HttpStatusCode.OK,
+                Succeeded = true,
+                Message = "User registered successfully",
+                Data = authResult
+            };
+        }
+        public async Task<Response<AuthResult>> AdminRegisterAsync(string username, string email, string address, string password, UserType userType)
+        {
+            // 1) Check if user already exists
+            var existingUser = await _userManager.FindByNameAsync(username)
+                               ?? await _userManager.FindByEmailAsync(email);
+
+            if (existingUser != null)
+            {
+                return new Response<AuthResult>
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Succeeded = false,
+                    Message = "User with the same username or email already exists"
+                };
+            }
+
+
+            // 2) Create the user entity
+            var user = new ApplicationUser
+            {
+                UserName = username,
+                Email = email,
+                Address = address,
+                Type = UserType.Admin
+            };
+
+            // 3) Save to DB
+            var result = await _userManager.CreateAsync(user, password);
+
+            if (!result.Succeeded)
+            {
+                return new Response<AuthResult>
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Succeeded = false,
+                    Message = "Registration failed",
+                    Errors = result.Errors.Select(e => e.Description).ToList()
+                };
+            }
+            var addRoleResult = await _userManager.AddToRoleAsync(user, "Admin");
+
+            if (!addRoleResult.Succeeded)
+            {
+                // rollback:
+                await _userManager.DeleteAsync(user);
+
+                return new Response<AuthResult>
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Succeeded = false,
+                    Message = "Failed to assign role",
+                    Errors = addRoleResult.Errors.Select(e => e.Description).ToList()
                 };
             }
 
@@ -224,9 +304,10 @@ namespace Infrastructure.Implementations
                 Message = "Password reset successful"
             };
 
-           
+
         }
 
+
     }
-    
+
 }

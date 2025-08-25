@@ -1,4 +1,6 @@
 using Application.Contracts;
+using Domain.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Base;
 
@@ -20,11 +22,27 @@ namespace Presentation.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            var response = await _authService.RegisterAsync(
+            var response = await _authService.CustomerRegisterAsync(
                 request.Username,
                 request.Email,
                 request.Address,
-                request.Password);
+                request.Password,
+                UserType.Customer);
+
+            return NewResult(response); // instead of StatusCode(...)
+        }
+
+        // POST: api/auth/admin/register
+        [HttpPost("admin/register")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminRegister([FromBody] RegisterRequest request)
+        {
+            var response = await _authService.AdminRegisterAsync(
+                request.Username,
+                request.Email,
+                request.Address,
+                request.Password,
+                UserType.Admin);
 
             return NewResult(response); // instead of StatusCode(...)
         }
@@ -32,6 +50,17 @@ namespace Presentation.Controllers
         // POST: api/auth/login
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            var response = await _authService.LoginAsync(
+                request.Username,
+                request.Password);
+
+            return NewResult(response);
+        }
+        // POST: api/auth/admin/login
+        [HttpPost("admin/login")]
+        
+        public async Task<IActionResult> AdminLogin([FromBody] LoginRequest request)
         {
             var response = await _authService.LoginAsync(
                 request.Username,

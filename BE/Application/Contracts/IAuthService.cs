@@ -1,3 +1,4 @@
+using Domain.Enum;
 using Domain.Results;
 
 namespace Application.Contracts
@@ -5,7 +6,8 @@ namespace Application.Contracts
     public interface IAuthService
     {
         //using task because these methods will be async
-        Task<Response<AuthResult>> RegisterAsync(string username, string email, string address, string password);
+        Task<Response<AuthResult>> CustomerRegisterAsync(string username, string email, string address, string password, UserType userType);
+        Task<Response<AuthResult>> AdminRegisterAsync(string username, string email, string address, string password, UserType userType);
         Task<Response<AuthResult>> LoginAsync(string username, string password);
 
         // for forget password functionality 
