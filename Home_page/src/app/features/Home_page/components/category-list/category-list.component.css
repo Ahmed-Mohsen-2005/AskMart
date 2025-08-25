@@ -1,5 +1,5 @@
 .container {
-    background: url('ai_supermarket.jpg') no-repeat center/cover;
+    background: url('/ai_supermarket.jpg') no-repeat center/cover;
     padding-bottom: 50px;
     padding-top: 20px;
 }
