@@ -9,7 +9,7 @@ namespace Domain.Enum
 {
     public enum UserType
     {
-        Admin,
-            Customer
+        Customer = 0,
+        Admin = 1
     }
 }
