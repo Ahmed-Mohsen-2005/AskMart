@@ -1,14 +1,10 @@
 <div class="container mt-5">
   <h2 class="mb-4">Shop by Category</h2>
-  <div class="row">
-    <div class="col-md-4 mb-3" *ngFor="let cat of categories">
-      <div class="card h-100 text-center shadow-sm">
-        <img [src]="cat.image" class="card-img-top" alt="{{ cat.name }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ cat.name }}</h5>
-          <button class="btn btn-outline-success">Explore</button>
-        </div>
-      </div>
+  <div class="categories-grid">
+    <div class="category-card" *ngFor="let cat of categories">
+      <img [src]="cat.image" alt="{{ cat.name }}">
+      <h5>{{ cat.name }}</h5>
+      <button class="btn btn-outline-success">Explore</button>
     </div>
   </div>
 </div>

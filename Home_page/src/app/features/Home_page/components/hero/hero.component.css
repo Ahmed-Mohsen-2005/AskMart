@@ -1,5 +1,70 @@
+
 .hero {
-  height: 70vh;
-  background: url('/assets/supermarket-banner.jpg') no-repeat center center/cover;
+  height: 85vh;
+  background: url('banner.png') no-repeat center/cover ;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   color: white;
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+}
+
+.hero h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+    font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+.btn {
+  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #28a745, #34d058);
+  border: none;
+  color: #fff;
+  box-shadow: 0px 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #23963c, #28a745);
+  transform: translateY(-2px);
+}
+
+.btn-outline-success {
+  border: 2px solid #28a745;
+  color: #28a745;
+  background: transparent;
+}
+
+.btn-outline-success:hover {
+  background: #28a745;
+  color: #fff;
+  transform: translateY(-2px);
 }
