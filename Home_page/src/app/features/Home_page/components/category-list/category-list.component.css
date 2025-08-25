@@ -1,3 +1,13 @@
+:root {
+  --card-border: #e5e7eb;
+  --btn-outline-color: #28a745;
+  --bg-overlay: rgba(255,255,255,0);
+}
+.dark-theme {
+  --card-border: #333;
+  --btn-outline-color: #34d058;
+  --bg-overlay: rgba(0,0,0,0.4);
+}
 .container {
     background: url('/ai_supermarket.jpg') no-repeat center/cover;
     padding-bottom: 50px;
@@ -14,14 +24,14 @@
   flex: 1 1 calc(25% - 20px);
   max-width: calc(25% - 20px);
   text-align: center;
-  border: 1px solid #eee;
+  border: 1px solid var(--card-border);
   border-radius: 10px;
   padding: 1rem;
-  background: #fff;
-  transition: transform 0.2s ease-in-out;
+  background: var(--card-color);
+  transition: transform 0.2s ease-in-out, background 0.3s, color 0.3s, border-color 0.3s;
   font-family: Arial, Helvetica, sans-serif;
-font-size: 1.4rem;
-
+  font-size: 1.4rem;
+  color: var(--text-color);
 }
 
 .category-card:hover {

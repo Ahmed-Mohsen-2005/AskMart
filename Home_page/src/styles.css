@@ -1,1 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
+/* 🌗 Global Theme Variables */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #111827;
+  --card-color: #f9fafb;
+  --input-bg: #ffffff;
+  --input-text: #111827;
+  --input-border: #d1d5db;
+  --placeholder-color: #6b7280;
+  --button-bg: #10b981; /* green accent */
+  --button-text: #ffffff;
+}
+
+.dark-theme {
+  --bg-color: #111827;
+  --text-color: #f9fafb;
+  --card-color: #1f2937;
+  --input-bg: #1f2937;
+  --input-text: #f9fafb;
+  --input-border: #374151;
+  --placeholder-color: #9ca3af;
+  --button-bg: #059669; /* darker green for dark mode */
+  --button-text: #f9fafb;
+}
+
+/* 🌗 Global Body */
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s, color 0.3s;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+}
+
+/* 🌗 Cards */
+.card {
+  background: var(--card-color);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+/* 🌗 Inputs */
+input, .search-input {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  transition: background 0.3s, color 0.3s, border 0.3s;
+}
+
+input::placeholder, .search-input::placeholder {
+  color: var(--placeholder-color);
+}
+
+/* 🌗 Buttons */
+button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #0e9f6e; /* slightly darker hover */
+}
