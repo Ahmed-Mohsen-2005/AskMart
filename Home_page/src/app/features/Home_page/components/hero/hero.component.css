@@ -1,7 +1,7 @@
 
 .hero {
   height: 85vh;
-  background: url('banner.png') no-repeat center/cover ;
+  background: url('banner.png') no-repeat center/cover;
   background-size: cover;
   display: flex;
   align-items: center;

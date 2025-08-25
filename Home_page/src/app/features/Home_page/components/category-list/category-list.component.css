@@ -1,3 +1,8 @@
+.container {
+    background: url('ai_supermarket.jpg') no-repeat center/cover;
+    padding-bottom: 50px;
+    padding-top: 20px;
+}
 .categories-grid {
   display: flex;
   flex-wrap: wrap;
@@ -14,6 +19,9 @@
   padding: 1rem;
   background: #fff;
   transition: transform 0.2s ease-in-out;
+  font-family: Arial, Helvetica, sans-serif;
+font-size: 1.4rem;
+
 }
 
 .category-card:hover {
@@ -57,4 +65,24 @@
   background: #28a745;
   color: #fff;
   transform: translateY(-2px);
+}
+.Shopcategory {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222; /* dark neutral for modern look */
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.Shopcategory::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, #28a745, #34d058);
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
 }

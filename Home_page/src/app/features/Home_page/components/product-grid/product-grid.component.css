@@ -1,3 +1,7 @@
+.container {
+    padding-bottom: 50px;
+    padding-top: 20px;
+}
 .products-grid {
   display: flex;
   flex-wrap: wrap;
@@ -59,4 +63,24 @@ img {
   background: #28a745;
   color: #fff;
   transform: translateY(-2px);
+}
+.FeaturedProducts {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222; /* dark neutral for modern look */
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.FeaturedProducts::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, #28a745, #34d058);
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
 }

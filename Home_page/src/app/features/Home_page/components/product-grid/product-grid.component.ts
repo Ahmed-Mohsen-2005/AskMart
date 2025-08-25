@@ -11,5 +11,7 @@ products = [
     { id: 1, name: 'Apple', price: 2.99, image: 'apple.jpeg' },
     { id: 2, name: 'Bread', price: 1.49, image: 'bread.jpg' },
     { id: 3, name: 'Milk', price: 0.99, image: 'milk.jpg' },
+    { id: 4, name: 'Eggs', price: 1.22, image: 'eggs.jpg' },
+    { id: 5, name: 'Oil', price: 0.84, image: 'oil.jpg' },
   ];
 }
