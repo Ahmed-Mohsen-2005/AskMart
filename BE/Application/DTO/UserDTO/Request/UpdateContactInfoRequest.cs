@@ -8,5 +8,7 @@ namespace Application.DTO.User.Request
 {
     public class UpdateContactInfoRequest
     {
+        public string? Email { get; set; }
+        public string? PhoneNumber { get; set; }
     }
 }

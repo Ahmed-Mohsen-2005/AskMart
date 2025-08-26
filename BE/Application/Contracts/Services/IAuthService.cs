@@ -1,6 +1,6 @@
 using Domain.Results;
 
-namespace Application.Contracts
+namespace Application.Contracts.Services
 {
     public interface IAuthService
     {

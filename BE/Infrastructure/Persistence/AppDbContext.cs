@@ -1,3 +1,4 @@
+using Domain.Entities.Product;
 using Domain.Entities.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -9,7 +10,7 @@ namespace Infrastructure.Persistence
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        
+        public DbSet<Products> Products { get; set; } = null!;
     }
 }
 

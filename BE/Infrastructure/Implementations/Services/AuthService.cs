@@ -1,4 +1,4 @@
-using Application.Contracts;
+using Application.Contracts.Services;
 using Domain.Entities.User;
 using Domain.Results;
 using Infrastructure.Persistence;
@@ -11,7 +11,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 
-namespace Infrastructure.Implementations
+namespace Infrastructure.Implementations.Services
 {
     public class AuthService : IAuthService
     {

@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\BE",
+    "\\BE\\Application",
+    "\\BE\\Application\\Contracts",
+    "\\BE\\Application\\Implementations",
+    "\\BE\\Domain",
+    "\\BE\\Domain\\Entities"
+  ],
+  "SelectedNode": "\\BE\\Template.sln",
+  "PreviewInSolutionExplorer": false
+}
