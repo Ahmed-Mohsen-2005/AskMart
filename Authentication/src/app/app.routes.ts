@@ -2,7 +2,7 @@
 import { Routes } from '@angular/router';
 import { Logincomponent } from './features/auth/components/login/login.component';
 import { Signupcomponent } from './features/auth/components/signup/signup.component';
-
+import { Forgotpassword } from './features/auth/components/forgotpassword/forgotpassword.component';
 export const routes: Routes = [
     { 
         path: 'login',  
@@ -18,5 +18,10 @@ export const routes: Routes = [
         path: '' , 
         redirectTo: 'login',
         pathMatch: "full"
+    },
+    { 
+        path: 'forgotpassword',  
+        component:Forgotpassword
     }
+    
 ];
