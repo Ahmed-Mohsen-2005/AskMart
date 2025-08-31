@@ -15,7 +15,8 @@ interface Product {
   selector: 'app-project-list',
   standalone: true,
   imports: [CommonModule, ProductFilter, ProductCard],
-  templateUrl: './product-list.component.html'
+  templateUrl: './product-list.component.html',
+  styleUrl: './product-list.component.css'
 })
 export class ProductList {
   products: Product[] = [

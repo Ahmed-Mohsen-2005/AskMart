@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-product-filter',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './product-filter.component.html'
+  templateUrl: './product-filter.component.html',
+  styleUrl: './product-filter.component.css'
 })
 export class ProductFilter {
   categories: string[] = ['All', 'Fruits', 'Vegetables', 'Bakery', 'Beverages', 'Grocery', 'Dairy'];
