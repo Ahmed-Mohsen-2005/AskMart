@@ -1,1 +1,20 @@
-<p>product-filter works!</p>
+<div class="filter-container">
+  <label for="categorySelect" class="sr-only">Filter by category</label>
+  <select
+    id="categorySelect"
+    class="filter-select"
+    [(ngModel)]="selectedCategory"
+    (ngModelChange)="applyFilter()"
+    aria-label="Filter by category">
+    <option *ngFor="let c of categories" [ngValue]="c">{{ c }}</option>
+  </select>
+
+  <label for="searchBox" class="sr-only">Search products</label>
+  <input
+    id="searchBox"
+    class="filter-input"
+    type="text"
+    placeholder="Search products..."
+    [(ngModel)]="searchText"
+    (ngModelChange)="applyFilter()" />
+</div>

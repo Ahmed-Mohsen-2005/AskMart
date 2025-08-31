@@ -4,7 +4,9 @@
     <div class="category-card" *ngFor="let cat of categories">
       <img [src]="cat.image" alt="{{ cat.name }}">
       <h5>{{ cat.name }}</h5>
-      <button class="btn btn-outline-success">Explore</button>
+      <a href="products">
+        <button class="btn btn-outline-success">Explore</button> 
+      </a>
     </div>
   </div>
 </div>

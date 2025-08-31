@@ -1,1 +1,11 @@
-<p>product-list works!</p>
+<div class="project-list-container">
+  <app-product-filter (filterChanged)="onFilterChanged($event)"></app-product-filter>
+
+  <div class="product-grid" role="list">
+    <app-product-card
+      *ngFor="let product of filteredProducts"
+      [product]="product"
+      role="listitem">
+    </app-product-card>
+  </div>
+</div>
