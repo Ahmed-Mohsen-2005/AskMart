@@ -36,7 +36,7 @@ namespace Infrastructure
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
 
-           services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
+           services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 options.Password.RequireDigit = true;
                 options.Password.RequireUppercase = false;

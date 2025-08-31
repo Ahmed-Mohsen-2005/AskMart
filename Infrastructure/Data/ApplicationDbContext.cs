@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.User;
+using Infrastructure.Data.Configurations.ProductConfigurations;
 using Infrastructure.Data.Configurations.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -17,7 +18,7 @@ namespace Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
           
             modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
      
