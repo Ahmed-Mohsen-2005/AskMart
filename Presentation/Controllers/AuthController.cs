@@ -25,7 +25,8 @@ namespace Presentation.Controllers
                 request.Username,
                 request.Email,
                 request.Address,
-                request.Password);
+                request.Password,
+                request.PhoneNumber);
 
             return StatusCode((int)response.StatusCode, response);
         }

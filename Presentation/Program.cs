@@ -27,10 +27,6 @@ builder.Services.AddDomainServices()
 
 builder.Services.AddScoped<GlobalExceptionHandler>();
 
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
-
 
 builder.Services.Configure<IdentityOptions>(options =>
 {

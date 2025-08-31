@@ -3,6 +3,6 @@
     public class DbConnection
     {
         public static string DefaultConnection =
-                   "Server= http://localhost; Port= 000; Database= oo; User= tamer; Password=; "; //Integrated Security= True; TrustServerCertificate= Yes
+    "Server=askmart.cr0e0yoygxe6.eu-north-1.rds.amazonaws.com;Port=3306;Database=askmart;User=askmart;Password=tGV5AJDVT7oplg9cpQEY;";
     }
 }

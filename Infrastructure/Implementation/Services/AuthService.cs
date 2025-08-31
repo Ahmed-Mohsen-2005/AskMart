@@ -27,7 +27,7 @@ namespace Infrastructure.Implementation.Services
 
         // implemented from IAuthService
         // Registration method
-        public async Task<Response<AuthResult>> RegisterAsync(string username, string email, string address, string password)
+        public async Task<Response<AuthResult>> RegisterAsync(string username, string email, string address, string password, string phoneNumber)
         {
             // 1) Check if user already exists
             var existingUser = await _userManager.FindByNameAsync(username)
@@ -49,7 +49,8 @@ namespace Infrastructure.Implementation.Services
             {
                 UserName = username,
                 Email = email,
-                Address = address
+                Address = address,
+                PhoneNumber = phoneNumber,
             };
 
             // 3) Save to DB
