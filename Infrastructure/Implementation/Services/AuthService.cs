@@ -66,10 +66,11 @@ namespace Infrastructure.Implementation.Services
                     Errors = result.Errors.Select(e => e.Description).ToList()
                 };
             }
+           
 
             // 4) Generate JWT + AuthResult
             var authResult = await GenerateAuthResult(user);
-
+             
             // 6) Return wrapped response
             return new Response<AuthResult>
             {
