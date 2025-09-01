@@ -45,7 +45,7 @@ namespace Infrastructure.Implementation.Services
             }
 
             product.ProductName = request.NewName;
-            await this._productsRepository.UpdateAsync(product.ProductId?? -1, product); // if product id is null put -1
+            await this._productsRepository.UpdateAsync(product.ProductId -1, product); // if product id is null put -1
 
             await _unitOfWork.SaveAsync();
 
@@ -110,7 +110,7 @@ namespace Infrastructure.Implementation.Services
 
             if (product == null) { return new Response<string> { StatusCode = HttpStatusCode.NotFound, Succeeded = false, Message=" Product not found."}; }
             product.ProductDescription = request.NewDescription;
-             await this._productsRepository.UpdateAsync(product.ProductId?? -1 , product);
+             await this._productsRepository.UpdateAsync(product.ProductId -1 , product);
             await _unitOfWork.SaveAsync();
 
             return new Response<string>

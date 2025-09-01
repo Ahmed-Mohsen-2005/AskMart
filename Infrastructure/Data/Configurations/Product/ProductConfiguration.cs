@@ -12,7 +12,7 @@ namespace Infrastructure.Data.Configurations.ProductConfigurations
 
             builder.Property(p => p.ProductName).IsRequired().HasMaxLength(100);
             builder.Property(p => p.ProductDescription).IsRequired().HasMaxLength(500);
-            builder.Property(p => p.ProdyctPrice).IsRequired().HasColumnType("decimal(18,2)");
+            builder.Property(p => p.ProductPrice).IsRequired().HasColumnType("decimal(18,2)");
             builder.Property(p => p.StockQuantity).IsRequired();
         }
     }

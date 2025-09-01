@@ -9,14 +9,10 @@ namespace Domain.Entities.Categories
 {
     public class Category
     {
-        private List<Product> products = new List<Product>();
 
-        public int? CategoryId { get; set; }   
+        public int CategoryId { get; set; }   
         public string CategoryName { get; set; } = string.Empty;
-
-
-        
-
+        public List<Product> Products { get; set; } = new List<Product>();
 
     }
 }

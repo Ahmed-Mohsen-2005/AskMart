@@ -1,4 +1,6 @@
-﻿using Domain.Entities.User;
+﻿using Domain.Entities.Products;
+using Domain.Entities.User;
+using Infrastructure.Data.Configurations.CategoryConfigurations;
 using Infrastructure.Data.Configurations.ProductConfigurations;
 using Infrastructure.Data.Configurations.Users;
 using Microsoft.AspNetCore.Identity;
@@ -19,10 +21,15 @@ namespace Infrastructure.Data
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
-          
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
-     
+
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
 
