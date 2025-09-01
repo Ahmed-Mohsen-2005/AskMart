@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductFilter } from '../../components/product-filter/product-filter.component';
 import { ProductCard } from '../../components/product-card/product-card.component';
-
+import { Navbar } from '../../../../shared/components/navbar/navbar';
+import { Footer } from '../../../../shared/components/footer/footer';
 interface Product {
   id: number;
   name: string;
@@ -14,7 +15,7 @@ interface Product {
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule, ProductFilter, ProductCard],
+  imports: [CommonModule, ProductFilter, ProductCard, Navbar, Footer],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css'
 })

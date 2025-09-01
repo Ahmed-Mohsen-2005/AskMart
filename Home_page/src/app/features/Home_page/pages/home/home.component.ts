@@ -4,10 +4,12 @@ import { CategoryList } from '../../components/category-list/category-list.compo
 import { ProductGrid } from '../../components/product-grid/product-grid.component';
 import {SearchBar} from '../../components/search-bar/search-bar.component';
 import {ChatbotButton} from '../../../../shared/components/chatbot-button/chatbot-button.component';
-
+import { RouterOutlet } from '@angular/router';
+import { Navbar } from '../../../../shared/components/navbar/navbar';
+import { Footer } from '../../../../shared/components/footer/footer';
 @Component({
   selector: 'app-home',
-  imports: [Hero, CategoryList, ProductGrid, SearchBar, ChatbotButton],
+  imports: [Hero, CategoryList, ProductGrid, SearchBar, ChatbotButton, Navbar, Footer, RouterOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
