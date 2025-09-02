@@ -19,9 +19,20 @@ export class ChatbotButton {
   }
 
   sendMessage() {
-    if (this.newMessage.trim()) {
-      this.messages.push(this.newMessage.trim());
-      this.newMessage = '';
-    }
+  if (this.newMessage.trim()) {
+    this.messages.push("You: " + this.newMessage);
+
+    fetch("http://localhost:8000/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: this.newMessage }),
+    })
+    .then(res => res.json())
+    .then(data => {
+      this.messages.push("Bot: " + data.reply);
+    });
+
+    this.newMessage = "";
   }
+}
 }

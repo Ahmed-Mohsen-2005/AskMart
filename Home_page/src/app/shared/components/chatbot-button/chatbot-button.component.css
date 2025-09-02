@@ -80,7 +80,11 @@
   flex: 1;
   padding: 10px;
   overflow-y: auto;
+  background: #fff;   /* light mode background */
+  color: #222;        /* light mode text */
 }
+
+
 
 /* Footer */
 .chat-footer {
@@ -156,7 +160,11 @@ button:hover svg {
   transform: rotate(45deg);
 }
 
-
+.chat-msg {
+  border-radius: 10px;
+  max-width: 70%;
+  font-size: 22px;
+}
 .close-btn {
   background: transparent;
   border: none;
