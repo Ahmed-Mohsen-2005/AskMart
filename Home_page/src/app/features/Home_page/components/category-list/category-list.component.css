@@ -1,0 +1,98 @@
+:root {
+  --card-border: #e5e7eb;
+  --btn-outline-color: #28a745;
+  --bg-overlay: rgba(255,255,255,0);
+}
+.dark-theme {
+  --card-border: #333;
+  --btn-outline-color: #34d058;
+  --bg-overlay: rgba(0,0,0,0.4);
+}
+.container {
+    background: url('/ai_supermarket.jpg') no-repeat center/cover;
+    padding-bottom: 50px;
+    padding-top: 20px;
+}
+.categories-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.category-card {
+  flex: 1 1 calc(25% - 20px);
+  max-width: calc(25% - 20px);
+  text-align: center;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 1rem;
+  background: var(--card-color);
+  transition: transform 0.2s ease-in-out, background 0.3s, color 0.3s, border-color 0.3s;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.4rem;
+  color: var(--text-color);
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+.category-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.btn {
+  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #28a745, #34d058);
+  border: none;
+  color: #fff;
+  box-shadow: 0px 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #23963c, #28a745);
+  transform: translateY(-2px);
+}
+
+.btn-outline-success {
+  border: 2px solid #28a745;
+  color: #28a745;
+  background: transparent;
+}
+
+.btn-outline-success:hover {
+  background: #28a745;
+  color: #fff;
+  transform: translateY(-2px);
+}
+.Shopcategory {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222; /* dark neutral for modern look */
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.Shopcategory::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, #28a745, #34d058);
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}

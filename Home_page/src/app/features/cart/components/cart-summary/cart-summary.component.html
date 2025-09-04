@@ -1,0 +1,13 @@
+<div class="cart-summary">
+  <div class="cart-summary__row">
+    <span>Total</span>
+    <span class="cart-summary__price">EGP {{ summary.total }}</span>
+  </div>
+
+  <div class="cart-summary__row" *ngIf="summary.deliveryTimeMins">
+    <span>Delivery Time</span>
+    <span>{{ summary.deliveryTimeMins }} mins</span>
+  </div>
+
+  <button class="checkout-btn">NEXT</button>
+</div>

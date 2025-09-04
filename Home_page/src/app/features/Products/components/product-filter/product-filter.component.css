@@ -1,0 +1,37 @@
+.filter-container{
+  background:#fff;
+  border-radius:12px;
+  padding:12px;
+  box-shadow:0 8px 20px rgba(16,24,40,0.06);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+@media (min-width:640px){
+  .filter-container{ flex-direction:row; align-items:center; }
+}
+
+.filter-select, .filter-input{
+  width:100%;
+  border:1px solid #e6edf3;
+  border-radius:10px;
+  padding:10px 12px;
+  font-size:0.95rem;
+  transition:box-shadow .12s, border-color .12s;
+}
+.filter-select:focus, .filter-input:focus{
+  outline:none;
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,0.12);
+}
+
+/* visually hidden label */
+.sr-only{
+  position:absolute!important;
+  width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;border:0!important;
+}
+
+/* small width for input on larger screens */
+@media (min-width:640px){
+  .filter-input{ width:33%; }
+}
