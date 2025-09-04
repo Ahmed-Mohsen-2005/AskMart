@@ -22,7 +22,7 @@
               {
                 "glob": "**/*",
                 "input": "public",
-                "src/assets"
+                "output": "src/assets"
               }
             ],
             "styles": [
@@ -80,8 +80,7 @@
               {
                 "glob": "**/*",
                 "input": "public",
-                    "output": "/"
-
+                "output": "/"
               }
             ],
             "styles": [

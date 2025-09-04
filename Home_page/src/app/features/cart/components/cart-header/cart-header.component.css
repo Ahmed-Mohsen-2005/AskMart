@@ -1,0 +1,26 @@
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+}
+
+.cart-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cart-header button {
+  border: none;
+  background: none;
+  color: #ff007a;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.cart-header button:hover {
+  text-decoration: underline;
+}

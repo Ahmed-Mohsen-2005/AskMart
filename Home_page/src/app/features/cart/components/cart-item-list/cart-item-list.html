@@ -1,0 +1,15 @@
+<div *ngIf="(items$ | async)!.length > 0; else emptyCart" class="cart-item-list">
+  <app-cart-item
+    *ngFor="let item of (items$ | async)"
+    [item]="item"
+    (quantityChange)="onQuantityChange(item.id, $event)"
+    (remove)="onRemove(item.id)">
+  </app-cart-item>
+</div>
+
+<ng-template #emptyCart>
+  <p class="cart-item-list__empty">Your basket is empty</p>
+</ng-template>
+ 
+
+

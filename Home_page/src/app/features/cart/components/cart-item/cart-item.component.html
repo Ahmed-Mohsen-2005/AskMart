@@ -1,0 +1,9 @@
+<div class="cart-item">
+  <p class="item-name">{{ item.name }}</p>
+  <p class="item-price">{{ item.price | currency }}</p> <!-- ✅ works now -->
+  <div class="item-quantity">
+    <button (click)="decrease()">-</button>
+    <span>{{ item.quantity }}</span>
+    <button (click)="increase()">+</button>
+  </div>
+</div>

@@ -9,7 +9,7 @@ import { Navbar } from '../../../../shared/components/navbar/navbar';
 import { Footer } from '../../../../shared/components/footer/footer';
 @Component({
   selector: 'app-home',
-  imports: [Hero, CategoryList, ProductGrid, SearchBar, ChatbotButton, Navbar, Footer, RouterOutlet],
+  imports: [Hero, CategoryList, ProductGrid, SearchBar, ChatbotButton, Navbar, Footer],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
